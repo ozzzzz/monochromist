@@ -37,7 +37,7 @@ def clean_image(img: Image, settings: Settings) -> Image:
         else:
             # fill with the color
             # TODO: replace with color
-            new_image_data.append((0, 255))
+            new_image_data.append((255, 255))
 
     new_image.putdata(new_image_data)
 
