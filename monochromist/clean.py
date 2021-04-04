@@ -19,12 +19,8 @@ def clean_image(img: Image, settings: Settings) -> Image:
     blured = converted.filter(ImageFilter.MedianFilter(settings.thickness))
     values = list(np.asarray(blured)[..., 0].ravel())
     step_for_percentiles = 10
-    percentiles = [
-        np.percentile(values, i, axis=0) for i in range(0, 101, step_for_percentiles)
-    ]
-    threshold = settings.alpha * percentiles[0] + (1 - settings.alpha) * np.mean(
-        percentiles[1:]
-    )
+    percentiles = [np.percentile(values, i, axis=0) for i in range(0, 101, step_for_percentiles)]
+    threshold = settings.alpha * percentiles[0] + (1 - settings.alpha) * np.mean(percentiles[1:])
 
     # Clean image.
     color_tuple = color2tuple(settings.color)
