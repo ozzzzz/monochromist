@@ -19,12 +19,14 @@ def clean_image(img: Image, settings: Settings) -> Image:
     values = np.asarray(blured)
 
     threshold = find_threshold(values, settings)
-
     cleaned_array = values < threshold
-
-    # TODO: add crop feature
-
     colored_image = color_image(img, cleaned_array, settings)
+
+    # TODO: remove artifacts with alone pixels
+
+    if settings.crop and cleaned_array.any():
+        borders = find_borders(cleaned_array)
+        colored_image = colored_image.crop(borders)
 
     return colored_image
 
@@ -32,6 +34,7 @@ def clean_image(img: Image, settings: Settings) -> Image:
 def find_threshold(arr: np.ndarray, settings: Settings) -> float:
     """Find threshold using percentiles.
     Main idea: pixels from contour happens very rarely and should be near 0-th percentile"""
+
     flattened = arr.flatten()
     step_for_percentiles = 10
     percentiles = [np.percentile(flattened, i, axis=0) for i in range(0, 101, step_for_percentiles)]
@@ -40,6 +43,7 @@ def find_threshold(arr: np.ndarray, settings: Settings) -> float:
 
 def color_image(img: Image, arr: np.array, settings: Settings) -> Image:
     """Color non-transparent pixels with selected color"""
+
     color_tuple = color2tuple(settings.color)
     transparent = (0, 0, 0, 0)
 
@@ -47,6 +51,21 @@ def color_image(img: Image, arr: np.array, settings: Settings) -> Image:
     new_image = img.convert("RGBA")
     new_image.putdata(colored)
     return new_image
+
+
+def find_borders(arr: np.array) -> Tuple[int, int, int, int]:
+    """Find transparent borders"""
+
+    notna_columns = arr.any(axis=0)
+    notna_rows = arr.any(axis=1)
+
+    left = np.flatnonzero(notna_columns)[0]
+    right = np.flatnonzero(notna_columns)[-1]
+
+    upper = np.flatnonzero(notna_rows)[0]
+    lower = np.flatnonzero(notna_rows)[-1]
+
+    return left, upper, right, lower
 
 
 def color2tuple(color: Color) -> Tuple[int, int, int, int]:
