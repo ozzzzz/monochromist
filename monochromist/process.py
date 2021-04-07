@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import click
 from colour import Color
@@ -10,8 +11,8 @@ from .clean import clean_image
 
 
 @click.command()
-@click.option("-i", "--input", type=str, required=True, help="Input filepath")
-@click.option("-o", "--output", type=str, required=True, help="Output filepath")
+@click.option("-i", "--input", type=Path, required=True, help="Input filepath")
+@click.option("-o", "--output", type=Path, required=True, help="Output filepath")
 @click.option(
     "-t",
     "--thickness",
@@ -44,7 +45,9 @@ from .clean import clean_image
     default=True,
     show_default=True,
 )
-def process(input, output, thickness, alpha, color, crop):
+def process(
+    input: Path, output: Path, thickness: int, alpha: float, color: Color, crop: bool
+) -> None:
     """Take contour from selected file"""
 
     parsed_color = Color(color)
