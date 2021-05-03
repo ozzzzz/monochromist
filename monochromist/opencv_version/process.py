@@ -5,9 +5,9 @@ import click
 import cv2
 from colour import Color
 from loguru import logger
-from PIL import Image
 
 from monochromist.opencv_version.post_editing import color_image, crop_borders
+
 from .classes import Settings
 from .find_mask import find_mask
 
@@ -47,9 +47,7 @@ from .find_mask import find_mask
     default=True,
     show_default=True,
 )
-def process(
-    input: Path, output: Path, lower: int, upper: float, color: Color, crop: bool
-) -> None:
+def process(input: Path, output: Path, lower: int, upper: float, color: Color, crop: bool) -> None:
     """Take contour from selected file"""
 
     parsed_color = Color(color)
@@ -63,14 +61,11 @@ def process(
         crop=crop,
     )
 
-
     initial_image = cv2.imread(str(input), cv2.IMREAD_GRAYSCALE)
 
-
-    mask = find_mask(initial_image,  settings)
+    mask = find_mask(initial_image, settings)
 
     cropped = mask
-    print("mask", mask.shape)
     if settings.crop:
         cropped = crop_borders(mask)
 

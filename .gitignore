@@ -130,3 +130,6 @@ dmypy.json
 
 # extras
 .idea
+
+*/.DS_Store
+.DS_Store

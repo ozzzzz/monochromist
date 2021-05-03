@@ -2,7 +2,6 @@ from typing import Tuple
 
 import numpy as np
 from colour import Color
-from loguru import logger
 from PIL import Image, ImageFilter
 
 from .classes import Settings
