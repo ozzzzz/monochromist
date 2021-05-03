@@ -14,4 +14,7 @@ For example:
 monochromist -i doc/images/cat.jpg -o /tmp/cat.png -c "black"
 ```
 
-For more settings run `monochromist --help`
+For more settings run
+```bash
+monochromist --help
+```
