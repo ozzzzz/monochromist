@@ -19,6 +19,7 @@ def clean_image(img: Image, settings: Settings) -> Image:
 
     threshold = find_threshold(values, settings)
     cleaned_array = values < threshold
+    print(np.sum(cleaned_array.flatten()))
     colored_image = color_image(img, cleaned_array, settings)
 
     # TODO: remove artifacts with alone pixels
