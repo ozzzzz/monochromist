@@ -49,7 +49,18 @@ def process(
     input: Path, output: Path, thickness: int, alpha: float, color: Color, crop: bool
 ) -> None:
     """Take contour from selected file"""
+    process_file(input, output, thickness, alpha, color, crop)
 
+
+def process_file(
+    input: Path,
+    output: Path,
+    thickness: int = 3,
+    alpha: float = 0.3,
+    color: Color = "black",
+    crop: bool = True,
+) -> None:
+    """Take contour from selected file"""
     parsed_color = Color(color)
 
     settings = Settings(
