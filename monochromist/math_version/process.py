@@ -12,8 +12,15 @@ from .classes import Settings
 
 
 @click.command()
-@click.option("-i", "--input", type=Path, required=True, help="Input filepath")
-@click.option("-o", "--output", type=Path, required=True, help="Output filepath")
+@click.option("-i", "--input", type=click.Path(exists=True, dir_okay=False), required=True, help="Input file")
+@click.option("-o", "--output", type=click.Path(writable=True, dir_okay=False), required=True, help="Output file")
+@click.option(
+    "-s",
+    "--saving",
+    type=click.IntRange(min=0, max=100),
+    help="How much pixels to save, from 0 (erase all) to 100 (save all). "
+         "If not defined then empirical algorithm will be used",
+)
 @click.option(
     "-t",
     "--thickness",
@@ -23,45 +30,26 @@ from .classes import Settings
     show_default=True,
 )
 @click.option(
-    "-s",
-    "--saving",
-    type=int,
-    help="From 0 to 1: the closer to one, the more pixels will be left",
-    default=3,
-    show_default=True,
-)
-@click.option(
     "-c",
     "--color",
     type=str,
-    help="Color of result contour",
+    help="Name of the color or it's HEX code (ex. #CC573E)",
     default="black",
     show_default=True,
 )
 @click.option(
-    "-p",
+    "-r",
     "--crop",
     type=bool,
-    help="Crop transparent pixels after converting",
+    help="Drop transparent pixels after image processing",
     default=True,
     show_default=True,
 )
 def process(
-    input: Path, output: Path, thickness: int, saving: int, color: Color, crop: bool
+    input: Path, output: Path, saving: int, thickness: int, color: Color, crop: bool
 ) -> None:
     """Take contour from selected file"""
-    process_file(input, output, thickness, saving, color, crop)
 
-
-def process_file(
-    input: Path,
-    output: Path,
-    thickness: int = 3,
-    saving: int = 3,
-    color: Color = "black",
-    crop: bool = True,
-) -> None:
-    """Take contour from selected file"""
     parsed_color = Color(color)
 
     settings = Settings(
@@ -70,6 +58,16 @@ def process_file(
         color=parsed_color,
         crop=crop,
     )
+
+    process_file(input, output, settings)
+
+
+def process_file(
+    input: Path,
+    output: Path,
+    settings: Settings
+) -> None:
+    """Take contour from selected file"""
 
     initial_image = Image.open(input)
     image_info = erase(initial_image, settings)
