@@ -1,27 +1,38 @@
+from dataclasses import dataclass
 from pathlib import Path
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
+import numpy as np
+from PIL import Image
 from colour import Color
 
-
-class Settings(NamedTuple):
+@dataclass
+class Settings:
     """Tools settings"""
 
-    in_file: Path
-    """Input file"""
+    saving: Optional[int] = None
+    """Defines what part of the pixels will be saved (not erased).
+    From 0 (erase everything) to 100 (save everything)"""
 
-    out_file: Path
-    """Output file"""
-
-    thickness: int
+    thickness: int = 3
     """Thickness of the line, used in algorithm to set blur radius"""
 
-    alpha: float
-    """Threshold for background from zero to one.
-    The closer to one, the more pixels will be left"""
+    color: Color = 'black'
+    """Color of the contour"""
 
-    color: Color
-    """Final color of contour"""
+    crop: bool = True
+    """Crop empty pixels after converting"""
 
-    crop: bool
-    """Crop transparent pixels after converting"""
+
+@dataclass
+class ImageInfo:
+    """Describes image with additional information"""
+
+    original: Image
+    """Original images"""
+
+    settings: Settings
+    """Settings that were used to process image"""
+
+    bool_array: np.ndarray
+    """2D array that represents used and unused pixels"""
