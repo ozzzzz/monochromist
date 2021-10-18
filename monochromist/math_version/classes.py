@@ -1,10 +1,10 @@
 from dataclasses import dataclass
-from pathlib import Path
-from typing import NamedTuple, Optional
+from typing import Optional
 
 import numpy as np
-from PIL import Image
 from colour import Color
+from PIL import Image
+
 
 @dataclass
 class Settings:
@@ -17,7 +17,7 @@ class Settings:
     thickness: int = 3
     """Thickness of the line, used in algorithm to set blur radius"""
 
-    color: Color = 'black'
+    color: Color = "black"
     """Color of the contour"""
 
     crop: bool = True

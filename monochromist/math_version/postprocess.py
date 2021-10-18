@@ -1,8 +1,6 @@
-from typing import Tuple
-
 import numpy as np
-from PIL import Image
 from colour import Color
+from PIL import Image
 
 from monochromist.math_version.classes import ImageInfo
 
@@ -26,14 +24,14 @@ def color_and_crop(image_info: ImageInfo) -> Image:
     return new_image
 
 
-def color_to_tuple(color: Color) -> [int]:
+def color_to_tuple(color: Color) -> list[int]:
     """Convert color to RGBA tuple"""
     r, g, b = [int(255 * x) for x in color.rgb]
     alpha_channel = 255
     return [r, g, b, alpha_channel]
 
 
-def find_borders(arr: np.array) -> Tuple[int, int, int, int]:
+def find_borders(arr: np.array) -> tuple[int, int, int, int]:
     """Find transparent borders"""
 
     notna_columns = arr.any(axis=0)
