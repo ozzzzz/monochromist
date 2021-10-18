@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "monochromist"
-version = "0.1.2"
+version = "1.0.0"
 description = "Convert your sketch into contour with transparent background"
 authors = ["Bogdan Neterebskii <bog2dan1@gmail.com>"]
 license = "MIT License"
@@ -22,8 +22,8 @@ opencv-python = "^4.5.1"
 pytest = "^5.2"
 
 [tool.poetry.scripts]
-monochromist = "monochromist.opencv_version.process:process"
-monochromist_v2 = "monochromist.math_version.process:process"
+monochromist_opencv = "monochromist.opencv_version.process:process"
+monochromist = "monochromist.math_version.process:process"
 
 [tool.black]
 line-length = 100

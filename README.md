@@ -2,7 +2,7 @@
 
 From sketch to contour with transparent background:
 
-![example](doc/images/cat_illustration.png)
+![example](https://github.com/ozzzzz/monochromist/blob/main/doc/images/cat_illustration.png)
 
 Minimum example:
 ```bash
