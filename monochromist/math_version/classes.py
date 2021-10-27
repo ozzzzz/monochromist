@@ -17,7 +17,7 @@ class Settings:
     thickness: int = 3
     """Thickness of the line, used in algorithm to set blur radius"""
 
-    color: Color = "black"
+    color: Color = Color("black")
     """Color of the contour"""
 
     crop: bool = True

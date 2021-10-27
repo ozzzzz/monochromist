@@ -26,7 +26,7 @@ def erase(img: Image, settings: Settings) -> ImageInfo:
 
     erased = values < threshold
 
-    return ImageInfo(img, settings, erased)
+    return ImageInfo(img, updated_settings, erased)
 
 
 def user_percentile(arr: np.ndarray, settings: Settings) -> int:
