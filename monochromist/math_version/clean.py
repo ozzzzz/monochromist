@@ -30,7 +30,8 @@ def erase(img: Image, settings: Settings) -> ImageInfo:
 
 
 def user_percentile(arr: np.ndarray, settings: Settings) -> int:
-    return np.asscalar(np.percentile(arr.flatten(), settings.saving, axis=0))
+    saving_safe_value = max(min(settings.saving, 100), 0)
+    return np.asscalar(np.percentile(arr.flatten(), saving_safe_value, axis=0))
 
 
 def empirical_percentile(arr: np.ndarray) -> tuple[int, int]:
