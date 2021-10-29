@@ -18,7 +18,7 @@ def erase(img: Image, settings: Settings) -> ImageInfo:
     values = np.asarray(blured)
 
     updated_settings = copy(settings)
-    if settings.saving:
+    if not settings.saving is None:
         threshold = user_percentile(values, settings)
     else:
         saving, threshold = empirical_percentile(values)
