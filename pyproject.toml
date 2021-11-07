@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "monochromist"
-version = "1.0.1"
+version = "1.0.2"
 description = "Convert your sketch into contour with transparent background"
 authors = ["Bogdan Neterebskii <bog2dan1@gmail.com>"]
 license = "MIT License"

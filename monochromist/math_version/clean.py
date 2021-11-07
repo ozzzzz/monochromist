@@ -1,4 +1,5 @@
 from copy import copy
+from typing import Tuple
 
 import numpy as np
 from PIL import Image, ImageFilter
@@ -18,7 +19,7 @@ def erase(img: Image, settings: Settings) -> ImageInfo:
     values = np.asarray(blured)
 
     updated_settings = copy(settings)
-    if not settings.saving is None:
+    if settings.saving is not None:
         threshold = user_percentile(values, settings)
     else:
         saving, threshold = empirical_percentile(values)
@@ -29,12 +30,15 @@ def erase(img: Image, settings: Settings) -> ImageInfo:
     return ImageInfo(img, updated_settings, erased)
 
 
-def user_percentile(arr: np.ndarray, settings: Settings) -> int:
-    saving_safe_value = max(min(settings.saving, 100), 0)
+def user_percentile(arr, settings: Settings) -> int:
+    if settings.saving:
+        saving_safe_value = max(min(settings.saving, 100), 0)
+    else:
+        saving_safe_value = 0
     return np.asscalar(np.percentile(arr.flatten(), saving_safe_value, axis=0))
 
 
-def empirical_percentile(arr: np.ndarray) -> tuple[int, int]:
+def empirical_percentile(arr: np.ndarray) -> Tuple[int, int]:
     percentiles = [np.percentile(arr.flatten(), i, axis=0) for i in range(101)]
     # y = K * x + b
     K = 1.5

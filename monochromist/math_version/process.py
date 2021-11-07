@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Tuple
 
 import click
 from colour import Color
@@ -83,12 +84,14 @@ def process_file(input: Path, output: Path, settings: Settings) -> ImageInfo:
     logger.info(f"Convert <{input}> to <{output}>")
     logger.info(f"Used settings: {image_info.settings}")
     if settings.saving is None:
-        logger.info("To better result try to vary saving parameter"
-                    "by adding `-s <from 0 to 100>` to the end of the command")
+        logger.info(
+            "To better result try to vary saving parameter"
+            "by adding `-s <from 0 to 100>` to the end of the command"
+        )
     return image_info
 
 
-def process_image(initial_image: Image, settings: Settings) -> tuple[Image, ImageInfo]:
+def process_image(initial_image: Image, settings: Settings) -> Tuple[Image, ImageInfo]:
     image_info = erase(initial_image, settings)
     new_image = color_and_crop(image_info)
     return new_image, image_info
