@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 import numpy as np
 from colour import Color
 from PIL import Image
@@ -11,7 +13,7 @@ def color_and_crop(image_info: ImageInfo) -> Image:
     color_as_tuple = color_to_tuple(image_info.settings.color)
     transparent = [0, 0, 0, 0]
 
-    def color_row(row: np.array) -> np.array:
+    def color_row(row):
         return np.array([color_as_tuple if x else transparent for x in row])
 
     colored = np.apply_along_axis(color_row, 1, image_info.bool_array)
@@ -24,14 +26,14 @@ def color_and_crop(image_info: ImageInfo) -> Image:
     return new_image
 
 
-def color_to_tuple(color: Color) -> list[int]:
+def color_to_tuple(color: Color) -> List[int]:
     """Convert color to RGBA tuple"""
     r, g, b = [int(255 * x) for x in color.rgb]
     alpha_channel = 255
     return [r, g, b, alpha_channel]
 
 
-def find_borders(arr: np.array) -> tuple[int, int, int, int]:
+def find_borders(arr) -> Tuple[int, int, int, int]:
     """Find transparent borders"""
 
     notna_columns = arr.any(axis=0)
