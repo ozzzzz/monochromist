@@ -3,7 +3,7 @@ from typing import Optional
 
 import numpy as np
 from colour import Color
-from PIL import Image
+from PIL.Image import Image
 
 
 @dataclass
@@ -29,7 +29,7 @@ class ImageInfo:
     """Describes image with additional information"""
 
     original: Image
-    """Original images"""
+    """Original image"""
 
     settings: Settings
     """Settings that were used to process image"""

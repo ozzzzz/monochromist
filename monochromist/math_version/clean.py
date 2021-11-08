@@ -2,7 +2,8 @@ from copy import copy
 from typing import Tuple
 
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import ImageFilter
+from PIL.Image import Image
 
 from .classes import ImageInfo, Settings
 

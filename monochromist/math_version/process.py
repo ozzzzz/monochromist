@@ -2,10 +2,11 @@ import os
 from pathlib import Path
 from typing import Tuple
 
+import PIL
 import click
 from colour import Color
 from loguru import logger
-from PIL import Image
+from PIL.Image import Image
 
 from monochromist.math_version.clean import erase
 from monochromist.math_version.postprocess import color_and_crop
@@ -74,7 +75,7 @@ def process(
 
 def process_file(input: Path, output: Path, settings: Settings) -> ImageInfo:
     """Take contour from selected file"""
-    initial_image = Image.open(input)
+    initial_image = PIL.Image.open(input)
     new_image, image_info = process_image(initial_image, settings)
 
     if os.path.exists(output):
