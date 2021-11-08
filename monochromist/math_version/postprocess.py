@@ -1,8 +1,9 @@
 from typing import List, Tuple
 
+import PIL
 import numpy as np
 from colour import Color
-from PIL import Image
+from PIL.Image import Image
 
 from monochromist.math_version.classes import ImageInfo
 
@@ -17,7 +18,7 @@ def color_and_crop(image_info: ImageInfo) -> Image:
         return np.array([color_as_tuple if x else transparent for x in row])
 
     colored = np.apply_along_axis(color_row, 1, image_info.bool_array)
-    new_image = Image.fromarray(np.uint8(colored), "RGBA")
+    new_image = PIL.Image.fromarray(np.uint8(colored), "RGBA")
 
     if image_info.settings.crop and image_info.bool_array.any():
         borders = find_borders(image_info.bool_array)
